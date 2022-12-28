@@ -1,0 +1,22 @@
+<head>
+    <meta charset="utf-8">
+  
+    <link rel="stylesheet" href="pokedex.component.css">
+    
+  </head>
+  
+  <body >
+    <div class="container flex-center">
+      <h2>PokeDex</h2>
+      <div class="search-container col-md-5 col-sm-5">
+        <input type="text" class="form-control" id="search_q" placeholder="Search pokemon by name">
+        <button (click) = "update()"></button>
+      </div>
+      <h3 class="name text-center" id="update_name">{{nombre}}</h3>
+      <div class="img-container">
+        <img id="update_img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png">
+      </div>
+    </div>
+    
+  </body>
+  
