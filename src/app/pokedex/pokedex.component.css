@@ -2,10 +2,17 @@ body {
     background-image: url("fondo.png");
   }
 
+
 img {
     width: 80%;
-    padding: 60px;
+    padding-left: 0%;
+    padding-right: 0%;
+    padding-top: 60px;
+    padding-bottom: 60px;
 }
+
+
+
 
 .hidden {
     opacity: 0;
@@ -48,7 +55,7 @@ input:focus {
     display:flex;
     flex-direction: column;
     align-items: center;
-    /* padding: 60px 15px; */
+    padding: 60px 15px;
 }
 
 .cp-text span {
