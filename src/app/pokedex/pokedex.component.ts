@@ -37,6 +37,9 @@ getPokemonData = async n => {
   }
 
   const pokemon = await response.json()
+  if(pokemon == null){
+    alert("Pokemon not found");
+  }
   
   this.total = 0;
   this.nombre = pokemon.name;
