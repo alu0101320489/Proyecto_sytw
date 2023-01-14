@@ -26,20 +26,17 @@ update(){
 getPokemonData = async n => {
   //document.getElementById('show_error').classList.remove('show')
   //document.getElementById('show_error').classList.add('hidden')
+  n = n.toLowerCase();
       
   this.url = `https://pokeapi.co/api/v2/pokemon/${n}`;
   const response = await fetch(this.url)
 
   if(response.status == 404 || response.statusText == 'Not Found'){
-      //document.getElementById('show_error').classList.add('show')
-      //document.getElementById('show_error').classList.remove('hidden')
+      alert("Pokemon not found")
       return
   }
 
   const pokemon = await response.json()
-  if(pokemon == null){
-    alert("Pokemon not found");
-  }
   
   this.total = 0;
   this.nombre = pokemon.name;
@@ -58,9 +55,9 @@ getPokemonData = async n => {
 
   (document.getElementById("update_img") as HTMLImageElement).src= pokemon.sprites.other.dream_world.front_default;
   
-  (document.getElementById("tipo1") as HTMLImageElement).src= '/assets/tipos/'+this.tipo1+'.png';
+  (document.getElementById("tipo1") as HTMLImageElement).src= 'assets/tipos/'+this.tipo1+'.png';
   if (this.tipo2 != ""){
-    (document.getElementById("tipo2") as HTMLImageElement).src= '/assets/tipos/'+this.tipo2+'.png';
+    (document.getElementById("tipo2") as HTMLImageElement).src= 'assets/tipos/'+this.tipo2+'.png';
   } else {
     (document.getElementById("tipo2") as HTMLImageElement).src= "";
   }
