@@ -9,9 +9,12 @@ import { PokedexComponent } from './pokedex/pokedex.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ProfileComponent } from './profile/profile.component';
+import { CalculatorComponent } from './calculator';
 
 import {JwtHelperService, JWT_OPTIONS} from '@auth0/angular-jwt';
 import { TokenInterceptorService } from './_services/token-interceptor.service';
+
 
 @NgModule({
   declarations: [
@@ -19,7 +22,9 @@ import { TokenInterceptorService } from './_services/token-interceptor.service';
     PokedexComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent,
+    CalculatorComponent
   ],
   imports: [
     BrowserModule,

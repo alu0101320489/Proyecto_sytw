@@ -32,8 +32,8 @@ getPokemonData = async n => {
   const response = await fetch(this.url)
 
   if(response.status == 404 || response.statusText == 'Not Found'){
-      alert("Pokemon not found")
-      return
+    alert("Pokemon not found")
+    return
   }
 
   const pokemon = await response.json()

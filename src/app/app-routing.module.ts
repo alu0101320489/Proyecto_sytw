@@ -5,12 +5,16 @@ import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { PokedexComponent } from './pokedex';
+import { ProfileComponent } from './profile';
+import { CalculatorComponent } from './calculator';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'pokedex', component: PokedexComponent },
+    { path: 'profile', component: ProfileComponent },
+    { path: 'calculator', component: CalculatorComponent },
     //{ path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard]}
 
     // otherwise redirect to home
