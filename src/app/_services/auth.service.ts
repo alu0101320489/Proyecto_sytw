@@ -26,8 +26,8 @@ export class AuthService {
   register(nombre: string, contraseña: string): Observable<any> {
     return this.http.post(`${this.URL}/register`,{nombre,contraseña,});
   }
-  cal_dmg(pok1: any, pok2: any, move: any): Observable<any> {
-    return this.http.post(`${this.URL}/damage`, {pok1, pok2, move });
+  cal_dmg(tipo1A:string, tipo2A: string, tipo1D:string, tipo2D: string, power:number, moveType:string, statsA: string[], statsD: string[], cat:string): Observable<any> {
+    return this.http.post(`${this.URL}/damage`, {tipo1A, tipo2A, tipo1D, tipo2D, power,moveType, statsA, statsD,cat });
   }
   save_team(id: string, equipo: string[]): Observable<any> {
     if (this.isAuth()) {

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../_services/auth.service';
 
 enum Types {
     steel = 0,
@@ -58,6 +59,8 @@ export class CalculatorComponent {
     moveType = "";
     cat = "";
     dealDamage = 0;
+
+    constructor(private authService: AuthService) { }
     
     updateD(){
       this.nD = (<HTMLInputElement>document.getElementById("search_qD")).value;
@@ -170,7 +173,16 @@ export class CalculatorComponent {
 
       search() {
         this.n = (<HTMLInputElement>document.getElementById("search_q")).value;
-        this.damage(this.n)
+        this.damage(this.n);
+        document.getElementById("dmg").style.visibility = "hidden";
+      }
+
+      calculate() {
+        this.authService.cal_dmg(this.tipo1A, this.tipo2A, this.tipo1D, this.tipo2D, this.power,this.moveType, this.statsA, this.statsD, this.cat).subscribe((res:any) =>{
+          console.log(res);
+          this.dealDamage = res.damage;
+        });
+        document.getElementById("dmg").style.visibility = "visible";
       }
 
       damage = async n => {
@@ -191,176 +203,7 @@ export class CalculatorComponent {
         this.moveType = move.type.name;
         this.cat = move.damage_class.name;
 
-        if (this.cat === "physical") {
-            this.dealDamage = 10 * this.stab(this.tipo1A, this.tipo2A, this.moveType) * 
-                        this.efectividad(this.moveType, this.tipo1D) * this.efectividad(this.moveType, this.tipo2D) *
-                        (((0.2 * this.statsA[1] + 1)* this.power)/(25 * this.statsD[2]) + 2) ;
-        } else {
-            this.dealDamage = 10 * this.stab(this.tipo1A, this.tipo2A, this.moveType) * 
-                        this.efectividad(this.moveType, this.tipo1D) * this.efectividad(this.moveType, this.tipo2D) *
-                        (((0.2 * this.statsA[3] + 1)* this.power)/(25 * this.statsD[4]) + 2) ;
-        }
         (document.getElementById("moveType") as HTMLImageElement).src= 'assets/tipos/'+this.moveType+'.png';
       }
 
-      stab(t1 : string, t2 : string, tm : string) {
-        if (t1 === tm || t2 === tm) {
-            return 1.5;
-        } else {
-            return 1;
-        }
-      }
-
-      efectividad(firstPokeType : string, secondPokeType : string) {
-        let multiplicador = 1;
-        switch (firstPokeType) {
-          case Types[0]:
-            if (secondPokeType === Types[0] || secondPokeType === Types[1] ||
-              secondPokeType === Types[4] || secondPokeType === Types[6]) {
-              multiplicador = 1/2;
-            } else if (secondPokeType === Types[7] || secondPokeType === Types[8] ||
-              secondPokeType === Types[13]) multiplicador = 2;
-            break;
-    
-          case Types[1]:
-            if (secondPokeType === Types[1] || secondPokeType === Types[3] ||
-              secondPokeType === Types[11]) multiplicador = 1/2;
-            else if (secondPokeType === Types[6] || secondPokeType === Types[13] ||
-              secondPokeType === Types[15]) multiplicador = 2;
-            break;
-    
-          case Types[2]:
-            if (secondPokeType === Types[0] || secondPokeType === Types[5] ||
-              secondPokeType === Types[6] || secondPokeType === Types[7] ||
-              secondPokeType === Types[9] || secondPokeType === Types[16] ||
-              secondPokeType === Types[17]) multiplicador = 1/2;
-            else if (secondPokeType === Types[11] || secondPokeType === Types[12] ||
-              secondPokeType === Types[14]) multiplicador = 2;
-            break;
-    
-          case Types[3]:
-            if (secondPokeType === Types[0]) multiplicador = 1/2;
-            else if (secondPokeType === Types[3]) multiplicador = 2;
-            else if (secondPokeType === Types[7]) multiplicador = 0;
-            break;
-    
-          case Types[4]:
-            if (secondPokeType === Types[3] || secondPokeType === Types[4] ||
-              secondPokeType === Types[11]) multiplicador = 1/2;
-            else if (secondPokeType === Types[1] || secondPokeType === Types[17]) {
-              multiplicador = 2;
-            } else if (secondPokeType === Types[15]) multiplicador = 0;
-            break;
-    
-          case Types[5]:
-            if (secondPokeType === Types[14]) multiplicador = 1/2;
-            else if (secondPokeType === Types[5] || secondPokeType === Types[12]) {
-              multiplicador = 2;
-            } else if (secondPokeType === Types[10]) multiplicador = 0;
-            break;
-    
-          case Types[6]:
-            if (secondPokeType === Types[1] || secondPokeType === Types[3] ||
-              secondPokeType === Types[6] || secondPokeType === Types[13]) {
-              multiplicador = 1/2;
-            } else if (secondPokeType === Types[0] || secondPokeType === Types[2] ||
-              secondPokeType === Types[8] || secondPokeType === Types[11]) {
-              multiplicador = 2;
-            }
-            break;
-    
-          case Types[7]:
-            if (secondPokeType === Types[0] || secondPokeType === Types[6] ||
-              secondPokeType === Types[16]) multiplicador = 1/2;
-            else if (secondPokeType === Types[3] || secondPokeType === Types[9] ||
-              secondPokeType === Types[14]) multiplicador = 2;
-            break;
-    
-          case Types[8]:
-            if (secondPokeType === Types[0] || secondPokeType === Types[1] ||
-              secondPokeType === Types[6] || secondPokeType === Types[8]) {
-              multiplicador = 1/2;
-            } else if (secondPokeType === Types[3] || secondPokeType ===Types[11] ||
-              secondPokeType === Types[15] || secondPokeType === Types[17]) {
-              multiplicador = 2;
-            }
-            break;
-    
-          case Types[9]:
-            if (secondPokeType === Types[2] || secondPokeType === Types[7] ||
-              secondPokeType === Types[12] || secondPokeType === Types[16] ||
-              secondPokeType === Types[17]) multiplicador = 1/2;
-            else if (secondPokeType === Types[0] || secondPokeType === Types[8] ||
-              secondPokeType === Types[10] || secondPokeType === Types[13] ||
-              secondPokeType === Types[14]) multiplicador = 2;
-            else if (secondPokeType === Types[5]) multiplicador = 0;
-            break;
-    
-          case Types[10]:
-            if (secondPokeType === Types[0] || secondPokeType === Types[13]) {
-              multiplicador = 1/2;
-            } else if (secondPokeType === Types[5]) multiplicador = 0;
-            break;
-    
-          case Types[11]:
-            if (secondPokeType === Types[0] || secondPokeType === Types[2] ||
-              secondPokeType === Types[3] || secondPokeType === Types[6] ||
-              secondPokeType === Types[11] || secondPokeType === Types[16] ||
-              secondPokeType === Types[17]) multiplicador = 1/2;
-            else if (secondPokeType === Types[1] || secondPokeType === Types[13] ||
-              secondPokeType === Types[15]) multiplicador = 2;
-            break;
-    
-          case Types[12]:
-            if (secondPokeType === Types[0] || secondPokeType === Types[12]) {
-              multiplicador = 1/2;
-            } else if (secondPokeType === Types[9] || secondPokeType ===Types[16]) {
-              multiplicador = 2;
-            } else if (secondPokeType === Types[14]) multiplicador = 0;
-            break;
-    
-          case Types[13]:
-            if (secondPokeType === Types[0] || secondPokeType === Types[9] ||
-              secondPokeType === Types[15]) multiplicador = 1/2;
-            else if (secondPokeType === Types[2] || secondPokeType === Types[6] ||
-              secondPokeType === Types[8] || secondPokeType === Types[17]) {
-              multiplicador = 2;
-            }
-            break;
-    
-          case Types[14]:
-            if (secondPokeType === Types[7] || secondPokeType === Types[9] ||
-              secondPokeType === Types[14]) multiplicador = 1/2;
-            else if (secondPokeType === Types[5] || secondPokeType === Types[12]) {
-              multiplicador = 2;
-            }
-            break;
-    
-          case Types[15]:
-            if (secondPokeType === Types[2] || secondPokeType === Types[11]) {
-              multiplicador = 1/2;
-            } else if (secondPokeType === Types[0] || secondPokeType === Types[4] ||
-              secondPokeType === Types[6] || secondPokeType === Types[13] ||
-              secondPokeType === Types[16]) multiplicador = 2;
-            else if (secondPokeType === Types[17]) multiplicador = 0;
-            break;
-    
-          case Types[16]:
-            if (secondPokeType === Types[5] || secondPokeType === Types[13] ||
-              secondPokeType === Types[15] || secondPokeType === Types[16]) {
-              multiplicador = 1/2;
-            } else if (secondPokeType === Types[7] || secondPokeType ===Types[11]) {
-              multiplicador = 2;
-            } else if (secondPokeType === Types[0]) multiplicador = 0;
-            break;
-    
-          case Types[17]:
-            if (secondPokeType === Types[0] || secondPokeType === Types[4] ||
-              secondPokeType === Types[13]) multiplicador = 1/2;
-            else if (secondPokeType === Types[2] || secondPokeType === Types[9] ||
-              secondPokeType === Types[11]) multiplicador = 2;
-            break;
-        }
-        return multiplicador;
-      }
 }

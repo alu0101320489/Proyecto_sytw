@@ -166,6 +166,9 @@
                 <input type="text" class="form-control" id="search_q" placeholder="Select move by name">
                 <button type= "submit" (click) = "search()">Search</button>
             </div>
+            <div class="search-container">
+                <button type= "submit" (click) = "calculate()">Calculate</button>
+            </div>
         </div>
         <div style="display: flex; flex-direction: row;">
             <div>
@@ -179,7 +182,7 @@
                     <img id="moveType" src="">
                 </td>
                 <td>
-                    <h4>{{dealDamage}}%</h4>
+                    <h4 id="dmg">{{dealDamage}}%</h4>
                 </td>
             </div>
         </div>
