@@ -7,13 +7,14 @@ import { RegisterComponent } from './register';
 import { PokedexComponent } from './pokedex';
 import { ProfileComponent } from './profile';
 import { CalculatorComponent } from './calculator';
+import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'pokedex', component: PokedexComponent },
-    { path: 'profile', component: ProfileComponent },
+    { path: 'profile', component: ProfileComponent , canActivate: [AuthGuard]},
     { path: 'calculator', component: CalculatorComponent },
     //{ path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard]}
 

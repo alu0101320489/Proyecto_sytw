@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../_services/auth.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class RegisterComponent {
     password: null
   };
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
 
   ngOnInit() {
@@ -24,6 +25,7 @@ export class RegisterComponent {
     this.authService.register(this.user.username, this.user.password).subscribe((res:any) =>{
       console.log(res);
     });
+    this.router.navigate(['/login']);
   }
   
 }

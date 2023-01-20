@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 import { AuthService } from '../_services/auth.service';
 
 @Component({
@@ -7,12 +8,13 @@ import { AuthService } from '../_services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  
   user = {
     username: null,
     password: null
   };
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private location: Location) { }
 
 
   ngOnInit() {
@@ -23,7 +25,17 @@ export class LoginComponent {
     console.log(this.user)
     this.authService.login(this.user.username, this.user.password).subscribe((res:any) =>{
       console.log(res);
-      localStorage.setItem('token', res.token);
+      
+      document.cookie = "id=" + res.id+";";
+      document.cookie = "token=" + res.token+";";
+      document.cookie = "username=" + res.nombre+";";
+      document.cookie = "team=" + res.equipo+";";
+
+      let cookies = document.cookie.split(';');
+        cookies.forEach(function(cookie) {
+        console.log(cookie);
+      });
+      this.location.back();
     });
   }
 }

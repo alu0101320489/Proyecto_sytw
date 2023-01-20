@@ -70,8 +70,7 @@ export class CalculatorComponent {
       }
     
     getPokemonDataD = async nD => {
-      //document.getElementById('show_error').classList.remove('show')
-      //document.getElementById('show_error').classList.add('hidden')
+
       nD = nD.toLowerCase();
           
       this.urlA = `https://pokeapi.co/api/v2/pokemon/${nD}`;
@@ -117,7 +116,6 @@ export class CalculatorComponent {
       document.getElementById('vel').style.width = this.widthD[5] + "px";
       document.getElementById('total').style.width = (this.totalD/300)* 100 + "px";
     
-      this.tipo2D = "";
     }
 
     getPokemonDataA = async nA => {
@@ -168,7 +166,6 @@ export class CalculatorComponent {
         document.getElementById('vel').style.width = this.widthA[5] + "px";
         document.getElementById('total').style.width = (this.totalA/300)* 100 + "px";
       
-        this.tipo2A = "";
       }
 
       search() {
