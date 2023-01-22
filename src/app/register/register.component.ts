@@ -13,7 +13,7 @@ export class RegisterComponent {
     password: null
   };
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(public authService: AuthService, public router: Router) { }
 
 
   ngOnInit() {

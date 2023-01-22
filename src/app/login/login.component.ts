@@ -14,7 +14,7 @@ export class LoginComponent {
     password: null
   };
 
-  constructor(private authService: AuthService, private location: Location) { }
+  constructor(public authService: AuthService, private location: Location) { }
 
 
   ngOnInit() {

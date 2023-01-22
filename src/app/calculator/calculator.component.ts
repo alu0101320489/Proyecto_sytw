@@ -1,27 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 
-enum Types {
-    steel = 0,
-    water = 1,
-    bug = 2,
-    dragon = 3,
-    electric = 4,
-    ghost = 5,
-    fire = 6,
-    fairy = 7,
-    ice = 8,
-    fighting = 9,
-    normal = 10,
-    grass = 11,
-    psychic = 12,
-    rock = 13,
-    dark = 14,
-    ground = 15,
-    poison = 16,
-    flying = 17
-  }
-
 @Component({
   selector: 'app-calculator',
   templateUrl: './calculator.component.html',
@@ -60,7 +39,7 @@ export class CalculatorComponent {
     cat = "";
     dealDamage = 0;
 
-    constructor(private authService: AuthService) { }
+    constructor(public authService: AuthService) { }
     
     updateD(){
       this.nD = (<HTMLInputElement>document.getElementById("search_qD")).value;

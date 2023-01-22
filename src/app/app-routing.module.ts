@@ -14,7 +14,7 @@ const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'pokedex', component: PokedexComponent },
-    { path: 'profile', component: ProfileComponent , canActivate: [AuthGuard]},
+    { path: 'profile', component: ProfileComponent /*, canActivate: [AuthGuard]*/},
     { path: 'calculator', component: CalculatorComponent },
     //{ path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard]}
 
