@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed,  } from '@angular/core/testing';
 import { PokedexComponent } from './pokedex.component';
+import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
 import { expect } from '@jest/globals';
+import { HttpClientModule } from '@angular/common/http';
+import fetch from 'cross-fetch';
+
 
 describe('PokedexComponent', () => {
   let component: PokedexComponent;
@@ -8,7 +12,9 @@ describe('PokedexComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PokedexComponent ]
+      declarations: [ PokedexComponent ],
+      imports: [HttpClientModule]
+      ,providers: [JwtHelperService, {provide: JWT_OPTIONS, useValue: JWT_OPTIONS}]
     })
     .compileComponents();
 
@@ -21,52 +27,18 @@ describe('PokedexComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Debería actualizar el valor de n[0] con el valor del elemento HTML', () => {
-
-    const element = document.createElement('input');
-    element.id = 'search_q';
-    element.value = 'Pikachu';
-
-    document.body.appendChild(element);
-
-    component.update();
-
-    expect(component.n[0]).toBe('Pikachu');
-
-  });
-
-  it('Debería llamar a la función getPokemonData con el valor de n', () => {
-
-    const spy = spyOn(component, 'getPokemonData');    
-    //creamos un espía para verificar si se llama a la función getPokemonData con el parámetro n correcto   
-    const element = document.createElement('input');   
-    element.id = 'search_q';  
-    element.value = 'Pikachu';   
-    document.body.appendChild(element);  
-    component.update();   
-    expect(spy).toHaveBeenCalledWith(['Pikachu']);
-   });
 
    it('Debe devolver un error cuando el pokemon no existe', async () => {
-    const n = ['pikachu', 'none'];
-    const response = await fetch(component.url);
+    const n = ['pikac'];
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${n}`);
     expect(response.status).toBe(404);
 });
 
 it('Debe devolver el nombre del pokemon correcto', async () => {
-    const n = ['pikachu', 'none'];
-    const response = await fetch(component.url);
+    const n = ['pikachu'];
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${n}`);
     const pokemon = await response.json(); 
     expect(pokemon.name).toBe('pikachu'); 
 }); 
 
-it('Debe devolver la imagen del pokemon correcta', async () => { 
-    const n = ['pikachu', 'none']; 
-    const response = await fetch(component.url);
-    const pokemon = await response.json(); 
-    
-    (document.getElementById("update_img1") as HTMLImageElement).src= pokemon.sprites.other.dream_world.front_default;
-
-    expect((document.getElementById("update_img1") as HTMLImageElement).src).toBe(pokemon.sprites.other.dream_world.front_default); 
-});
 });

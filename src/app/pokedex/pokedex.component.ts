@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import fetch from 'cross-fetch';
 
 @Component({
   selector: 'app-pokedex',

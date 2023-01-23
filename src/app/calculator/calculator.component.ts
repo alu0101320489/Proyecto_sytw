@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
+import fetch from 'cross-fetch';
 
 @Component({
   selector: 'app-calculator',

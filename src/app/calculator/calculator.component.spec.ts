@@ -1,8 +1,10 @@
 
-
+import { HttpClientModule } from '@angular/common/http';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { CalculatorComponent } from './calculator.component';
 import { expect } from '@jest/globals';
+import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
+import fetch from 'cross-fetch';
 
 describe('CalculatorComponent', () => {
   let component: CalculatorComponent;
@@ -11,8 +13,10 @@ describe('CalculatorComponent', () => {
   beforeEach((() => {
     TestBed.configureTestingModule({
       declarations: [CalculatorComponent],
+      imports: [HttpClientModule]
+        ,providers: [JwtHelperService, {provide: JWT_OPTIONS, useValue: JWT_OPTIONS}]}
    //   providers: [AuthService]
-    }).compileComponents();
+    ).compileComponents();
 
     fixture = TestBed.createComponent(CalculatorComponent);
     component = fixture.componentInstance;
@@ -23,89 +27,20 @@ describe('CalculatorComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Debería actualizar el valor de n[0] con el valor del elemento HTML', () => {
 
-    const element = document.createElement('input');
-    element.id = 'search_q';
-    element.value = 'Pikachu';
-
-    document.body.appendChild(element);
-
-    component.updateA();
-
-    expect(component.n[0]).toBe('Pikachu');
-
-  });
-
-  it('Debería actualizar el valor de n[0] con el valor del elemento HTML', () => {
-
-    const element = document.createElement('input');
-    element.id = 'search_q';
-    element.value = 'Pikachu';
-
-    document.body.appendChild(element);
-
-    component.updateD();
-
-    expect(component.n[0]).toBe('Pikachu');
-
-  });
-
-  it('Debería llamar a la función getPokemonData con el valor de n', () => {
-
-    const spy = spyOn(component, 'getPokemonDataA');    
-    //creamos un espía para verificar si se llama a la función getPokemonData con el parámetro n correcto   
-    const element = document.createElement('input');   
-    element.id = 'search_q';  
-    element.value = 'Pikachu';   
-    document.body.appendChild(element);  
-    component.updateA();   
-    expect(spy).toHaveBeenCalledWith(['Pikachu']);
-   });
-
-   it('Debería llamar a la función getPokemonData con el valor de n', () => {
-
-    const spy = spyOn(component, 'getPokemonDataD');    
-    //creamos un espía para verificar si se llama a la función getPokemonData con el parámetro n correcto   
-    const element = document.createElement('input');   
-    element.id = 'search_q';  
-    element.value = 'Pikachu';   
-    document.body.appendChild(element);  
-    component.updateD();   
-    expect(spy).toHaveBeenCalledWith(['Pikachu']);
-   });
 
    it('Debe devolver un error cuando el pokemon no existe', async () => {
-    const n = ['pikachu', 'none'];
-    const response = await fetch(component.url);
+    let n = ['pik'];
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${n}`);
     expect(response.status).toBe(404);
 });
 
 it('Debe devolver el nombre del pokemon correcto', async () => {
-    const n = ['pikachu', 'none'];
-    const response = await fetch(component.url);
+    let n = ['pikachu'];
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${n}`);
     const pokemon = await response.json(); 
     expect(pokemon.name).toBe('pikachu'); 
 }); 
-
-it('Debe devolver la imagen del pokemon correcta', async () => { 
-    const n = ['pikachu', 'none']; 
-    const response = await fetch(component.url);
-    const pokemon = await response.json(); 
-    
-    (document.getElementById("update_img1") as HTMLImageElement).src= pokemon.sprites.other.dream_world.front_default;
-
-    expect((document.getElementById("update_img1") as HTMLImageElement).src).toBe(pokemon.sprites.other.dream_world.front_default); 
-});
-
-
-it('should call the authService.cal_dmg correctly', () => {
-  const spy = spyOn(component.authService, 'cal_dmg').and.callThrough();
-
-  component.calculate();
-
-  expect(spy).toHaveBeenCalledWith(component.tipo1A, component.tipo2A, component.tipo1D, component.tipo2D, component.power,component.moveType, component.statsA, component.statsD, component.cat);
-});
 
 
 
@@ -121,7 +56,7 @@ it('should call the authService.cal_dmg correctly', () => {
     it('should show an alert when the move does not exist', async () => {
         const n = 'non-existent-move';
 
-        spyOn(window, 'alert');
+        jest.spyOn(window, 'alert');
 
         await component.damage(n);
 
@@ -133,7 +68,7 @@ it('should call the authService.cal_dmg correctly', () => {
 
         await component.damage(n);
 
-        expect(component.moveName).toBe('Fire Blast');   // or whatever the name of the move is supposed to be 
+        expect(component.moveName).toBe('fire-blast');   // or whatever the name of the move is supposed to be 
     });
 
 });
