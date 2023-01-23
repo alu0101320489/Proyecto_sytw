@@ -2,6 +2,7 @@
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { CalculatorComponent } from './calculator.component';
+import { expect } from '@jest/globals';
 
 describe('CalculatorComponent', () => {
   let component: CalculatorComponent;

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthService } from '../_services/auth.service';
 import { RegisterComponent } from './register.component';
+import { expect } from '@jest/globals';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
